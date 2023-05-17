@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: datastores
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./regions/base/datastores
+  targetNamespace: datastores
+  prune: true
+  wait: false
+  dependsOn:
+    - name: base-namespaces
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-key
+  postBuild:
+    substituteFrom:
+      - name: cloud-provider-constants
+        kind: ConfigMap
+      - name: region-config
+        kind: ConfigMap
+      - name: region-secrets
+        kind: Secret

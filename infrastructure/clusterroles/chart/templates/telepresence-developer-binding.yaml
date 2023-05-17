@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "chart.fullname" . }}-telepresence
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+subjects:
+  - kind: Group
+    name: developer
+  - kind: Group
+    name: gke-dev-test@instana.com   
+roleRef:
+  kind: ClusterRole
+  name: {{ include "chart.fullname" . }}-telepresence
+  apiGroup: rbac.authorization.k8s.io

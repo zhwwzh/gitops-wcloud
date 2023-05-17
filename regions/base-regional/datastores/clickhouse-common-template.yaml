@@ -1,0 +1,69 @@
+---
+apiVersion: "clickhouse.altinity.com/v1"
+kind: "ClickHouseInstallationTemplate"
+metadata:
+  name: "clickhouse-common-template"
+spec:
+  defaults:
+    templates:
+      serviceTemplate: service-template
+  configuration:
+    files:
+      config.d/storage.xml: |
+        <yandex>
+          <storage_configuration>
+            <disks>
+              <default/>
+            </disks>
+            <policies>
+              <logs_policy>
+                <volumes>
+                  <data>
+                    <disk>default</disk>
+                  </data>
+                </volumes>
+              </logs_policy>
+            </policies>
+          </storage_configuration>
+        </yandex>
+    settings:
+      max_table_size_to_drop: 0
+      max_partition_size_to_drop: 0
+    profiles:
+      default/max_memory_usage: 30000000000
+      default/max_execution_time: 60
+      default/joined_subquery_requires_alias: 0
+      default/max_query_size: 1048576
+      default/use_uncompressed_cache: 0
+      default/enable_http_compression: 1
+      default/load_balancing: random
+      default/background_pool_size: 64
+      default/background_schedule_pool_size: 64
+      default/background_fetches_pool_size: 64
+      default/distributed_directory_monitor_split_batch_on_failure: 1
+      default/distributed_directory_monitor_batch_inserts: 1
+      default/insert_distributed_sync: 1
+      default/log_queries: 1
+      default/log_query_views: 1
+      default/max_threads: 16
+      deafult/allow_experimental_database_replicated: 1
+    quotas:
+      default/interval/duration: 3600
+      default/interval/queries: 0
+      default/interval/errors: 0
+      default/interval/result_rows: 0
+      default/interval/read_rows: 0
+      default/interval/execution_time: 0
+    users:
+      instana/networks/ip: "::/0"
+      instana/k8s_secret_password: datastores/clickhouse-instana-admin/password
+  templates:
+    serviceTemplates:
+      - name: service-template
+        spec:
+          ports:
+            - name: http
+              port: 8123
+            - name: tcp
+              port: 9000
+          type: ClusterIP

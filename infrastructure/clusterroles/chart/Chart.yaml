@@ -1,0 +1,6 @@
+apiVersion: v2
+name: clusterroles
+description: Cluster roles used to access the cluster without full administrative rights.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

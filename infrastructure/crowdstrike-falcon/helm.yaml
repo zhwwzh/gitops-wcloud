@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: crowdstrike-falcon
+  namespace: flux-system
+spec:
+  interval: 5m
+  targetNamespace: falcon-system
+  chart:
+    spec:
+      chart: falcon-sensor
+      version: "1.18.6"
+      sourceRef:
+        kind: HelmRepository
+        name: crowdstrike-falcon
+      interval: 1m
+  install:
+    createNamespace: true
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+  test:
+    enable: true
+  values:
+    node:
+      enabled: true
+      backend: bpf
+      image:
+        repository: "delivery.instana.io/rem-docker-crowdstrike-falcon/falcon-sensor/us-1/release/falcon-sensor"
+        tag: "6.51.0-14812.falcon-linux.x86_64.Release.US-1"
+        pullSecrets: instana-registry
+    container:
+      enabled: false
+
+  valuesFrom:
+    - kind: Secret
+      name: crowdstrike-falcon-config

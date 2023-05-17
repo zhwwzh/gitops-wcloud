@@ -1,0 +1,68 @@
+---
+apiVersion: cassandra.datastax.com/v1beta1
+kind: CassandraDatacenter
+metadata:
+  name: cassandra-state
+spec:
+  clusterName: instana-state
+  serverType: cassandra
+  serverVersion: ${cassandraStateVersion:=4.0.3}
+  superuserSecretName: "cassandra-instana-admin"
+  size: ${cassandraStateCount:=3}
+  allowMultipleNodesPerWorker: false
+  resources:
+    requests:
+      cpu: ${cassandraProfilesCpu:=2}
+      memory: ${cassandraProfilesMemory:=14}Gi
+  additionalLabels:
+    "cost.instana.io/centre": shared
+    "cost.instana.io/item": datastore
+    "instana.io/single-tenant": "true"
+  racks:
+    - name: rack1
+      nodeAffinityLabels:
+        "workloads.instana.io/cassandra": "true"
+    - name: rack2
+      nodeAffinityLabels:
+        "workloads.instana.io/cassandra": "true" 
+  podTemplateSpec:      
+    spec:
+      containers: []
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              topologyKey: "kubernetes.io/hostname"
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: "instana.io/single-tenant"
+                      operator: instana.io/single-tenant
+                      values:
+                        - "true"
+  storageConfig:
+    cassandraDataVolumeClaimSpec:
+      storageClassName: "instana-standard"
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: ${cassandraStateVolumeSize:=4096}Gi
+  config:
+    jvm-server-options:
+      initial_heap_size: "1G"
+      max_heap_size: "32G"
+      additional-jvm-opts:
+        - -Dcassandra.allow_unsafe_aggressive_sstable_expiration=true
+        - -Dcassandra.system_distributed_replication_dc_names=cassandra-state
+        - -Dcassandra.system_distributed_replication_per_dc=2
+    cassandra-yaml:
+      authenticator: org.apache.cassandra.auth.PasswordAuthenticator
+      authorizer: org.apache.cassandra.auth.CassandraAuthorizer
+      role_manager: org.apache.cassandra.auth.CassandraRoleManager
+      memtable_flush_writers: 8
+      auto_snapshot: false
+      gc_warn_threshold_in_ms: 10000
+      otc_coalescing_strategy: DISABLED
+      memtable_allocation_type: offheap_objects
+      num_tokens: 256
+      enable_drop_compact_storage: true

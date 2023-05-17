@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-pause
+spec: 
+  imagePullSecrets:
+    - name: instana-registry
+  containers:
+    - name: container1
+      image: quay.io/crio/pause
+    - name: container2
+      image: delivery.instana.io/rem-docker-dockerhub-mirror/crio/pause:latest
+    - name: container3
+      image: delivery.instana.io/rem-docker-dockerhub-mirror/datastax/cass-config-builder:1.0.4-ubi7

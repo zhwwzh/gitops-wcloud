@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: beeinstana-instana-admin
+type: kubernetes.io/basic-auth
+stringData:
+  username: instana
+  password: ${datastorePassword}
+

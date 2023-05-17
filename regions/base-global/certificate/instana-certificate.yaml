@@ -1,0 +1,21 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: instana-certificate
+  labels:
+    "instana.io/certificate-source": ${certificateSource}
+    "instana.io/cloud-provider": ${cloudProvider}
+spec:
+  secretName: instana-tls
+  commonName: "${regionDomainName}"
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: instana-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+  dnsNames:
+    - "${regionDomainName}"
+    - "*.${regionDomainName}"

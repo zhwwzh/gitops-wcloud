@@ -1,0 +1,68 @@
+apiVersion : kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: images-from-instana-registry
+spec:
+  background: false
+  rules:
+  - name: mutate-registry-in-containers
+    match:
+      any:
+        - resources:
+            kinds:
+              - Pod
+    preconditions:
+      all:
+        - key: "{{request.operation || 'BACKGROUND'}}"
+          operator: AnyIn
+          value:
+            - CREATE
+            - UPDATE
+    mutate:
+      foreach:
+        - list: "request.object.spec.containers"
+          preconditions:
+            all:
+              - key: "{{images.containers.\"{{element.name}}\".registry}}"
+                operator: AnyIn
+                value:
+                  - docker.io
+          patchStrategicMerge:
+            spec:
+              imagePullSecrets:
+                - name: instana-registry
+              containers:
+                - name: "{{ element.name }}"           
+                  image: delivery.instana.io/rem-docker-dockerhub-mirror/{{images.containers."{{element.name}}".path}}:{{images.containers."{{element.name}}".tag}}
+  - name: mutate-registry-in-initcontainers
+    match:
+      any:
+        - resources:
+            kinds:
+              - Pod
+    preconditions:
+      all:
+        - key: "{{request.operation || 'BACKGROUND'}}"
+          operator: AnyIn
+          value:
+            - CREATE
+            - UPDATE
+        - key: "{{ request.object.spec.initContainers[] || `[]` | length(@) }}"
+          operator: GreaterThanOrEquals
+          value: 1
+    mutate:
+      foreach:
+        - list: "request.object.spec.initContainers"
+          preconditions:
+            all:
+              - key: "{{images.initContainers.\"{{element.name}}\".registry}}"
+                operator: AnyIn
+                value:
+                  - docker.io
+          patchStrategicMerge:
+            spec:
+              imagePullSecrets:
+                - name: instana-registry
+              initContainers:
+                - name: "{{ element.name }}"           
+                  image: delivery.instana.io/rem-docker-dockerhub-mirror/{{images.initContainers."{{element.name}}".path}}:{{images.initContainers."{{element.name}}".tag}}

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+    name: tenant1-unit1
+stringData:
+    config.yaml: ENC[AES256_GCM,data:r/lXaIsGDbGgRk2iBQuh5IbIfD1K1e1VFgnYpNHy891TZsLtsYnMRc9XunqWjCwSzLuUkpOgM4/QHqvzCbhqP8T3plrP62Vmb7ldaJEEHFlIgpFChJad9bc0IYfq0DctgNAcwhTicpGTuf9FMq/JvTmpDoX+H6gVZs5qoM2oKmvaNB/n6zzTGM7A1LuVR1GntWLRXkA9ZtFjSHdaVeCMAnDtkooOKhGjhRt+2haANOISlnZYl0H8sskgUIalosf1U6ua5QSTOumnHsAzWOSZgiZ7gz/A03ZYR5bMn5jrlwGutXdDYpzLS4E7CMZNzskuQ12BttlFM5jzaVsLYZvlwJFzctVjIF1w31znecF4kSOzTqnR3ELhu+nHg+d5FEl0ckCfjDI8mXkcE/BjxolZy4gtAo3WKGnu+VNSt3e3H0A/boDICuZhRsOZ7YFmmLlwVKeJ0T+QQyfNeXHbMh/987NTAQjv7AQwvzeJ6QmGKRYvOFm8iRAN4ZNubiEXOoP/MEQOZoBeTRX301wQeJ6Uc3TPbWEAzPYkAngpwoIN/f2jsZ0+epjF2x0TcYHmnq/i7XOBEuiPyWGHhLXW0E7mZS0bup+jHZgTU9YgQbHffR0tEh69qkuuJF2lNhKUxc8VawBe0taLzKgJDnqDVpQrZC1Vt2/WscL2hBwkhPbr7APsI+oLErMbS1xSHQMMTn7ewTtWRUXJGZ6HNc9vG6khjR+lrNQS7RoGPnC9eNC+dVc757fbZuAqvO0bHuFcjbRY3jUzSifebLDDTFxxsCkD7LNanZC3ppGtXS45llvSxmcg,iv:IU1HeplP5B9s9MtIWCZrzlersZhi8yX8K9uWI0apZb4=,tag:sNPIYBEHlO/XguwR7ykrwA==,type:str]
+sops:
+    kms: []
+    gcp_kms:
+        - resource_id: projects/instana-non-production/locations/us-central1/keyRings/heliconia-ring/cryptoKeys/heliconia-sops
+          created_at: "2023-04-10T11:01:58Z"
+          enc: CiQApEPKcERckctKCnYLcIyW9QePjbgyfjo3depdi+pkkETgYsYSSQDEqbZNe9zBUSh0Idyz2K8dptfo8FfL2FYJvvQQrCilFwtEtQIMx4mDKzQkHFdS8C2oe3J3qBqXSlJbGrME6vD19J/Ed38aC4s=
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1ek6qsfk8aynr3h6jz96rk8zhe3jzz2rtc88hx3zndsxxhqwulvssn6rs5j
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBqbTJtSXdFUnYvWVBNUVpI
+            YUNCeFdyUm54dHNwRE9KUFJqMnp0bm5DN0NFCjBDbHA1eFhHR3ZVYUdyMHNjaGp6
+            WEZHNzIrbDVWYzAvZ2NTczhFd1dEZ1kKLS0tIHFyUHBCbnhFME8wOW83eGdKdVRl
+            bGROTW12cTRPMEY4RWtaR2JSZzJxMm8KAsQArHnV7W3Aj8EXhYjHOUk6NTJ1fDfi
+            I58DlGwqsOY1IwR7pO2PAxwr1a2bIQsocMtffaZUu17TH58B16EsBQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-04-10T11:01:58Z"
+    mac: ENC[AES256_GCM,data:IgyqE8xSAFqMgZqTt5Jn2mAYcJhpiv+X/yRKyQGt13EWaBWZqlNdN9j8t1+Y2WuBF7wslLvLoI45X9MW7rfyBs+7p03O9S18QbZb/vGLcqM3hqzKHocGILIvS5eEUJ9LKE1d9q7tlbVBK2p+DFRAsf6hXS51X7eroxijZ8bKOa4=,iv:QRaM31Q3nWH5VlJkDbg0d4NRAxIe0kTik1nGHsdHN2c=,tag:WNKZ83sAd0KyxZ1dAd/4ag==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

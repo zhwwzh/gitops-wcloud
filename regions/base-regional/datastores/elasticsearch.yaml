@@ -1,0 +1,144 @@
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: ${elasticsearchVersion:=7.16.2}
+  auth:
+    fileRealm:
+      - secretName: elasticsearch-instana-admin
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  nodeSets:
+    - name: masters
+      count: ${elasticsearchMasterCount:=3}
+      config:
+        node.roles: ['master']
+        node.store.allow_mmap: false
+      podTemplate:
+        metadata:
+          labels:
+            "cost.instana.io/centre": shared
+            "cost.instana.io/item": datastore
+            "instana.io/single-tenant": "true"
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: ${elasticsearchMasterMemory:=28}Gi
+                  cpu: ${elasticsearchMasterCpu:=12}
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: "workloads.instana.io/elasticsearch-master"
+                      operator: In
+                      values:
+                        - "true"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      "instana.io/single-tenant": "true"
+                  topologyKey: kubernetes.io/hostname            
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            storageClassName: "instana-standard"
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: ${elasticsearchMasterVolumeSize:=128}Gi
+    - name: active-data
+      count: ${elasticsearchActiveDataCount:=2}
+      config:
+        node.roles: ['data_content', 'data_hot', 'data_warm']
+        node.store.allow_mmap: false
+      podTemplate:
+        metadata:
+          labels:
+            "cost.instana.io/centre": shared
+            "cost.instana.io/item": datastore
+            "instana.io/single-tenant": "true"
+        containers:
+          - name: elasticsearch
+            resources:
+              requests:
+                memory: ${elasticsearchActiveDataMemory:=28}Gi
+                cpu: ${elasticsearchActiveDataCpu:=12}
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: "workloads.instana.io/elasticsearch-active"
+                      operator: In
+                      values:
+                        - "true"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      "instana.io/single-tenant": "true"
+                  topologyKey: kubernetes.io/hostname
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            storageClassName: "instana-standard"
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: ${elasticsearchActiveDataVolumeSize:=1024}Gi
+    - name: archival-data
+      count: ${elasticsearchArchivalDataCount:=2}
+      config:
+        node.roles: ['data_cold', 'data_frozen']
+        node.store.allow_mmap: false
+      podTemplate:
+        metadata:
+          labels:
+            "cost.instana.io/centre": shared
+            "cost.instana.io/item": datastore
+            "instana.io/single-tenant": "true"
+        containers:
+          - name: elasticsearch
+            resources:
+              requests:
+                memory: ${elasticsearchArchivalDataMemory:=14}Gi
+                cpu: ${elasticsearchArchivalDataCpu:=2}
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: "workloads.instana.io/elasticsearch-archival"
+                      operator: In
+                      values:
+                        - "true"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      "instana.io/single-tenant": "true"
+                  topologyKey: kubernetes.io/hostname
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            storageClassName: "instana-archival"
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: ${elasticsearchArchivalDataVolumeSize:=1024}Gi

@@ -1,0 +1,13 @@
+---
+name: does-mutate
+policies:
+  - ../../helm-charts-from-instana-repository.yaml
+resources:
+  - helm-repository.yaml  
+results:
+  - policy: helm-charts-from-instana-repository
+    rule: mutate-url-in-helm-repository
+    resources: 
+      - helm-repository
+    patchedResource: helm-repository-patched.yaml
+    kind: source.toolkit.fluxcd.io/v1beta2/HelmRepository

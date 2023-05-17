@@ -1,0 +1,41 @@
+---
+apiVersion: zookeeper.pravega.io/v1beta1
+kind: ZookeeperCluster
+metadata:
+  name: zookeeper-logs
+spec:
+  replicas: ${zookeeperLogsCount:=3}
+  labels:
+    "app.kubernetes.io/name": zookeeper
+    "instana.io/single-tenant": "true"
+  storageType: persistence
+  persistence:
+    reclaimPolicy: Delete
+    spec:
+      storageClassName: "instana-standard"
+      resources:
+        requests:
+          storage: ${zookeeperApplicationLogSize:=128}Gi
+  pod:
+    resources:
+      requests:
+        cpu: ${zookeeperLogsCpu:=14}
+        memory: ${zookeeperLogsMemory:=24}Gi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: "workloads.instana.io/zookeeper"
+                operator: In
+                values:
+                  - "true"
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: "instana.io/single-tenant"
+                  operator: In
+                  values:
+                    - "true"
+            topologyKey: kubernetes.io/hostname 

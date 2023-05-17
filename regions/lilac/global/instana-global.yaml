@@ -1,0 +1,68 @@
+---
+apiVersion: instana.io/v1beta2
+kind: Core
+metadata:
+  name: instana-global
+  namespace: instana-core
+spec:
+  baseDomain: instanastable.rocks
+  componentConfigs:
+    - name: statistic-exporter-global
+      replicas: 0
+    - name: integration
+      replicas: 0
+  datastoreConfigs:
+    kafkaConfig:
+      hosts:
+        - kafka-kafka-brokers.datastores.svc.cluster.local
+      ports:
+        - name: tcp
+          port: 9092
+      authEnabled: true
+      saslMechanism: SCRAM-SHA-512
+    postgresConfigs:
+      - hosts:
+          - in-pg.lilac-internal.instanastable.rocks
+        ports:
+          - name: tcp
+            port: 5432
+        databases:
+          - butlerdb
+          - tenantdb
+          - sales
+          - instanactl
+        authEnabled: true
+  emailConfig:
+    smtpConfig:
+      from: lilac@instanastable.rocks
+      host: instanastable.rocks
+      port: 465
+      useSSL: true
+  serviceAccountAnnotations:
+    "eks.amazonaws.com/role-arn": "arn:aws:iam::410797082306:role/in-lilac-pods"
+  resourceProfile: large
+  nodeSelector:
+    "workloads.instana.io/global": "true"
+  imagePullSecrets:
+    - name: instana-registry
+  operationMode: normal
+  operationScopes:
+    - global
+  properties:
+    - name: instana.region
+      value: lilac
+    - name: acl.allowMultiRegionIpAddresses
+      value: |
+        10.0.0.0/8,
+        172.16.0.0/12,
+        192.168.0.0/16,
+        99.79.13.240/32,
+        52.95.250.159/32,
+        3.96.99.113/32,
+  featureFlags:
+    - name: feature.instana.saas.enabled
+      enabled: true
+  imageConfig:
+    registry: delivery.instana.io
+    repository: rel-docker-backend-local/backend
+    tag: 3.245.259-0

@@ -1,0 +1,83 @@
+---
+apiVersion: beeinstana.instana.com/v1beta1
+kind: BeeInstana
+metadata:
+  name: beeinstana
+spec:
+  version: ${beeinstanaVersion:=1.1.1}
+  dynamicSettings:
+    TRACING_ENABLED: "0"
+  adminCredentials:
+    secretName: "beeinstana-instana-admin"
+  aggregator:
+    additionalLabels:
+      "cost.instana.io/centre": iqm
+      "cost.instana.io/item": datastore
+      "instana.io/single-tenant": "true"
+    shards: ${beeinstanaAggregatorCount:=1}
+    mirrors: 2
+    memory: ${beeinstanaAggregatorMemory:=28}Gi
+    cpu: ${beeinstanaAggregatorCpu:=14}
+    volumes:
+      live:
+        storageClass: instana-standard
+        size: ${beeinstanaAggregatorVolumeSize:=512}Gi
+    affinityOverrides:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: "workloads.instana.io/beeinstana-aggregator"
+                operator: In
+                values:
+                  - "true"
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: "instana.io/single-tenant"
+                  operator: In
+                  values:
+                    - "true"
+            topologyKey: kubernetes.io/hostname 
+  ingestor:
+    additionalLabels:
+      "cost.instana.io/centre": iqm
+      "cost.instana.io/item": datastore
+      "instana.io/single-tenant": "true"
+    replicas: ${beeinstanaIngestorCount:=1}
+    memory: ${beeinstanaAggregatorMemory:=28}Gi
+    cpu: ${beeinstanaAggregatorCpu:=14}
+    metricsTopic: raw_metrics
+    brokerList: kafka-kafka-brokers.datastores:9092
+    env: gitops
+    workerPoolSize: 20
+    maxQueueSize: 5000
+    flushInterval: 5000
+    affinityOverrides:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: "workloads.instana.io/beeinstana-ingestor"
+                operator: In
+                values:
+                  - "true"
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: "instana.io/single-tenant"
+                  operator: In
+                  values:
+                    - "true"
+            topologyKey: kubernetes.io/hostname 
+  config:
+    additionalLabels:
+      "cost.instana.io/centre": iqm
+      "cost.instana.io/item": datastore
+      "instana.io/single-tenant": "true"
+    replicas: ${beeinstanaConfigCount:=3}
+    memory: ${beeinstanaConfigMemory:=1}Gi
+    cpu: ${beeinstanaConfigCpu:=1}
+    nodeAffinityLabel: "instana.io/pool=multi-tenant"

@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: elasticsearch-instana-admin
+type: kubernetes.io/basic-auth
+stringData:
+  username: instana
+  password: ${datastorePassword}
+  roles: superuser
+

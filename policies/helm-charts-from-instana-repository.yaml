@@ -1,0 +1,27 @@
+---
+apiVersion : kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: helm-charts-from-instana-repository
+spec:
+  background: false
+  rules:
+    - name: mutate-url-in-helm-repository
+      match:
+        all:
+          - resources:
+              kinds:
+                - source.toolkit.fluxcd.io/v1beta2/HelmRepository
+      preconditions:
+        all:
+          - key: "{{request.operation || 'BACKGROUND'}}"
+            operator: AnyIn
+            value:
+              - CREATE
+              - UPDATE
+      mutate:
+        patchStrategicMerge:
+          spec:
+            url: "https://delivery.instana.io/artifactory/int-helm-dedicated-internal/"
+            secretRef:
+              name: helm-secrets

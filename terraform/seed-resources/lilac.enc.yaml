@@ -1,0 +1,238 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: flux-system
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+metadata:
+    name: flux-system
+    namespace: flux-system
+kind: Secret
+type: Opaque
+stringData:
+    identity: ENC[AES256_GCM,data:65zivrOeOBeZy43seNXgC2dNN7rkcceJ8tLc+iWz5DLdxHXoX4RyZd+b/zWEw7DeCGHxJqYmbfhmAZZGCqphwJrbO/lLOWS9InRtxZq6PjjDkMaDZHUelr3pMgAScxrMqYmlXCwZAMd1tcqBW1NmERYR/o9aSrPmGHTYICsU/ZqPtf13pylC/cZ3D1cveq2QypCu93HTtygYuxQjVrS7j6LvGwI7Oam5HLOvuJnrbWkNWF7yIN05M4+4tBIrPG9gmefF9SrPh2M2CdpfcRMq8pw9mn/5u+678AsiOevU3LI8QxgnKZThKl8ujINt2fVJYGkGUxYIkGk9Tm79BdmCcfsS4GUuLaPPYUaEK8Kacd3NWH6Etk8AT09Bj/nzimPXUPqTkgARwhB5AHaEWaKQ2nWd+Fdv7+/gsyTPZ8MofnfyIlXT1p99+gtgdfP+YHp6pFhVMS7ZIdzkhPpfOJjcvFgvrHPdzyBuu5detLpRspTgR9bLQPenWU3AAMZDnKbHQnFoShPKUnk0K8Cj4dHEI/gK9/AX6l0YLBXPpLE11yncCeY=,iv:6ly4ce9qVnAIKA0PSav70IOY6y1cg2UQ8TLhPYAvNjQ=,tag:Ad5KZTKW9Wv+4BK+gTEPbg==,type:str]
+    known_hosts: ENC[AES256_GCM,data:BqW4MxcO8MiUEjTlFkt84BBJGLU7p4AOvgUhuMnYeFCJKzXGU1fwKnigdZ5030DKCrhIG1LX5j64R3LkkY2gdoOQO3WbvbvkyEawaf2t5gaHE5Vq+fEEhEcbPwELRhNO9D+E3NexhZRJ+Xmwrh18uGJmSxWmTfzmcpvoXM11UY4tZCPucReDB95ZdJqRmwdV+/e+RqCjndgTBtmq6s8Haw0X+6Kkb+FuHEF7xnbwvi8=,iv:OL/EFX/EtFHcPSpTsr28o/P4SsuOY+jAae1CG7HG/rM=,tag:OctMzGq+33kJNqUAwapWSw==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+metadata:
+    name: sops-key
+    namespace: flux-system
+kind: Secret
+type: Opaque
+stringData:
+    age.agekey: ENC[AES256_GCM,data:2O24PubLykmDUtiZ9z1s9sXsVTaG/pq68VvzhQPLjQOB0UxEFS47JNsFbEJ5dDdEzhKfbHDzF04gnhl3Ob7vYdkwE1OyIA++L6C6,iv:cz1W3dF2StQ4M/UKE3QGcfGbpi2SVX2zA3hYStlE0/Q=,tag:pHNeL/jxunDPHTzuuVp1Xg==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+    name: helm-secrets
+    namespace: flux-system
+stringData:
+    username: ENC[AES256_GCM,data:SJrsnlmJP1ha3WLg6AKdeyk=,iv:OOgcoCkgEBAWV0FNp4DWXKw3lsR5+PHRVXVyZyWZQiE=,tag:bBoowaEiUIaI6KW7ZZtHuw==,type:str]
+    password: ENC[AES256_GCM,data:1p6JULZ2sFouHkyKLMoMx6bxAQudIGrPIibibcbueMYryg9Ykzmum17P7+yuYBwzJSYAn35oP10gVk0CuTg3pw==,iv:PfWwK6NP4oXf19W33eyNK+scYD1IpmwxWkeMWz1rPeA=,tag:0o26knx2zUd8oywCDvA7gg==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/dockerconfigjson
+metadata:
+    name: instana-registry
+    namespace: flux-system
+stringData:
+    .dockerconfigjson: ENC[AES256_GCM,data:2k7U8lpep1Z/+lp7s9OKQYTeW0lErPUZzXUpxLNK2wkkmU5OZqIpXcU3pTV2Io5bpVdzi5G+CrjGTa+0y3Ad7RczMfQtPYqVF8D9qfHm/myXilyjyXYAkL68LeZDQRgqU140YWBi6m/AXdUGeaYEGnLorO0cbj1qMjS91V6OpfoKoph1489vRcpM32kD77hSyZ+VQ7O/JW0eGl+0WUTUIa3yADfz/Qt3ERKBAAbngGMKztB8zWY3jDZVJgXStHfmnco69lVphvtuW+I+rD24CNsKZDevtvcpzTBv4m8KxQdewr3TBRln1WyfMUNheiwMBZq3rbPFWW0ar516IVIv+YLY7LQkCojTvmC5gNm2Wgu+uQHYNl5gpdWcetfHweRYz3c1msAn8/ssjH8ghPOo4D74G8YOPwjAxW7gPKPBRB8f2qT/ZEaYndTgBY7zOYN39ubW+Wpd5H5hhirzjctLdGLgDoqy2Vtb7rl67T9Nast8bJI1qOp4n7urHc/Gzfkd1cpvPfEx2IYXemrAPXi4J8jo7+mDSU+o5AyhlQGHVaxAW0nuhYs0NEZmw2HB,iv:Kq/PFxnncNoYxPyaJ/edGgD19Ggbl1Q8fdXykoYzrGk=,tag:k9IDgga8f+AeJsxWBtrzoQ==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: cert-manager-service-account
+    namespace: flux-system
+data:
+    values.yaml: ENC[AES256_GCM,data:SB1GrMl+2FrdESpKNuPoi3peIAjrP+XxJkFZAPVhmcG9mewyA5h0Izpub5XvoNbEdA5lWLoA4HTm/iNraC/Hrn0L1wJba6wD8/gM5yn70eAkcDBqTqUyAuauxO23Uk7EnC4rLk8QSxBT/gBnmnxhjIiwbRxTpF1VgvajUws=,iv:HAyi1vyzOg+Yp1B1TD+c9eYLkM6YDOzz6Q7l+NzuAJo=,tag:GSo3bnZEQXTMMpfFKmaJ0A==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: cloud-provider-constants
+    namespace: flux-system
+data:
+    cloudProvider: ENC[AES256_GCM,data:b0ML,iv:6bI3s6wRScHBHhxzoejYSvQtTAaNQ15ncos+jU76iwE=,tag:cEUDIDSuqSgpCNI9W3sWRg==,type:str]
+    hostedZoneID: ENC[AES256_GCM,data:Be/xUYQ3LwrSZn9qZXaUTCEUXBgO,iv:wlytdGLLbU1Wn7MiPH8PMldsqOJsX2BE12HGrDANONM=,tag:vFA9LYANrBTjWLxQMMUe0g==,type:str]
+    regionDomainName: ENC[AES256_GCM,data:PBIrp+t4JamwTPQD5xxP39KVuA==,iv:huZ4bY/1RWFvnixMwK8CMnWorN1oWEW32tkNTPEWqK0=,tag:gLbfoTypmVtX3Ke8Wt0lzA==,type:str]
+    regionDeploymentName: ENC[AES256_GCM,data:6zjuqxY=,iv:8pYTwgWJfPQvtd7bDn0WwSiOlC6RmBVf9FMr8BjPXxA=,tag:4UOuhBVi2otihoMowyqDOg==,type:str]
+    cloudProjectRegion: ENC[AES256_GCM,data:pAOpmotQYFYMMqd5,iv:R0n5w3WvDMogtepCqxr5Tit/QjyjcloSOQV/qM+Th+c=,tag:ZmO8ChgV7y9qK/ik7KigMw==,type:str]
+    cloudProjectName: ENC[AES256_GCM,data:ZkiVdL2e,iv:cKHJlI/B0hPdOJH6GmJ5W6V7pxoOfDFa9+pnjAeFeVo=,tag:GvfYvSgCooce21cp36S5nw==,type:str]
+    cloudProjectId: ENC[AES256_GCM,data:guGCtvjZ5xuhT/Ed,iv:Am4kbFjN8Kfv5m8OISMo4oJpWL2ku+pcXDw0CPSt/98=,tag:6Ep0juHTk5Urm1i/QyYgCQ==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: opencost-config
+    namespace: flux-system
+stringData:
+    values.yaml: ENC[AES256_GCM,data:CTz/nHilXAdOEZ4yBbvej+YxKaqH/0rTTTGNSHiecjmhW3aoZVcWVToGAxCP+aID73TB/lxu6VR8ReMurgCntE1wAUTiuilHufPft3lRHVUVk7+mU/yi2sqhFh4r+bajFeYhvrZwPmfWkal22XxRJLdd0lwP+VZK2LQOfgY7MEB0kfXExOVwTbmGUOufzGqsuQLNvMiKPNsHqm1L4GsmFFPJTls5scccAx+mdAqzcIqeuL74iJbeUFSdvmSA90bYKrNe+kahgeFbMsIzgJ0DWWf/CpHlOh9UVaju+c8vuKr4peqCwio8v45NJyCaDyPAjaDV1SrlKcW5ey1LcMBqCoVXwswec+++cVZsiVrI44aBzdd+k/lkzo0B89gwv9AJ9LUAdosVicrijDJsoVZIh+++MtO2LidXMWNHH4dVfi1ZZ/RBdn2MNg5rcpwPJdHWCIEsbiFafSga1RUtzd78VSLvcB6q2srQzXEBsZt3qkHyrgR1CxXzJFis5QV5mYo6uBmgehRfbPbO7Tf0,iv:8FcQDhX9u5Yo1XByHq9ypYDvGFFyTKDDIHasrn2TY60=,tag:Y8gkPfjwYjrE4Qjpi5Wz/A==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: instana-agent-config
+    namespace: flux-system
+stringData:
+    values.yaml: ENC[AES256_GCM,data:2sX09yN7oUQhwMbp7MVdPNJsukjrepH2oGdKXMtypHvMLzIv2WIDkIuh0DNveOintAr+C5gTHI2MlChaeE+rE0/yiUh1KE8iHj05ydDxVUCtokfWPN9Evvm7ZNz6wh9OvGDP+7onlHBzSV9vIIGnNlCQ,iv:P9fVRaHQgrdf6sgEeaMH4pDgGl+vCg1kJDzg90LYHck=,tag:C4wdEWZ42AXJ1HVCFTJk7g==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: crowdstrike-falcon-config
+    namespace: flux-system
+stringData:
+    values.yaml: ENC[AES256_GCM,data:RXU9/xHjdOE1CWaX/QrUR/VXTq+a7/Xppt7OAQtg9IG4LxlpvwOz4KXJkS5TA0zCOYp6otZWdBue3WA1QdG0DzP8wmarWXxzMesbdJS3pwtIdUHT7FAcZZ6SPn5JC7Uav44VbdybLp2g2n2k9BLt17r/,iv:vJUeqBycIcaWAJeCchWKFRlYpRdPRO65WoTymg7CUQ0=,tag:ZW5ZmQaEBCKXNKQB2A7Y7w==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50
+          created_at: "2023-04-11T17:50:10Z"
+          enc: AQICAHhxerxdHUlfW+mdUHVr+scvxBlI0S67fb4Y71zRrAV84QHQK5oYtIxb4gDHSXjqb+IIAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQSxFROWv4fk8k+ciAgEQgDv3mkAy2ZGDJwHKrhZO/IpfVODEQ6BpTF6RZ/1jbmjRQ7SSeKX3nZEapusCQmybkZmZh5NF63fTed2D/Q==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-04-11T17:50:10Z"
+    mac: ENC[AES256_GCM,data:w9jSexgM36qgdAPdzqrXx7jj5wvfYUZ7ca8VfOMJLcQGV1/uOddKvg4olGlLh1PSJ/GFC4alZphSupMBmbq7N2ujgCYThOEgDvmLR18sxyx6Op9JK8W7QQHshkknyEugknU509mplEKB9H8KFT1N9gIm2JzMvUnQve9+3Q5u/Xs=,iv:p+c4TRYKtc5ahIwpj+tBfsxF76erwyirORjSlLJDr80=,tag:+dsNchcs5MWj0Tqe5FpZNQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

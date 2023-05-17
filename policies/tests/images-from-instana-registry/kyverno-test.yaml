@@ -1,0 +1,30 @@
+---
+name: does-mutate
+policies:
+  - ../../images-from-instana-registry.yaml
+resources:
+  - pod-pause.yaml
+  - pod-init.yaml
+  - pod-init-single.yaml
+results:
+  - policy: images-from-instana-registry
+    rule: mutate-registry-in-containers
+    resources: 
+      - pod-pause
+    patchedResource: pod-pause-patched.yaml
+    kind: Pod
+    result: pass
+  - policy: images-from-instana-registry
+    rule: mutate-registry-in-initcontainers
+    resources: 
+      - pod-init
+    patchedResource: pod-init-patched.yaml
+    kind: Pod
+    result: pass
+  - policy: images-from-instana-registry
+    rule: mutate-registry-in-initcontainers
+    resources: 
+      - pod-init-single
+    patchedResource: pod-init-single-patched.yaml
+    kind: Pod
+    result: pass      

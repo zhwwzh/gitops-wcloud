@@ -1,0 +1,103 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: kafka
+spec:
+  kafka:
+    version: ${kafkaVersion:=3.2.3}
+    replicas: ${kafkaCount:=3}
+    authorization:
+      type: simple
+      superUsers:
+        - instana-kafka-user
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+        authentication:
+          type: scram-sha-512
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+    resources:
+      requests:
+        memory: ${kafkaMemory:=24}Gi
+        cpu: ${kafkaCpu:=14}
+    jvmOptions:
+      -Xms: ${kafkaMemory:=24}G
+      -Xmx: ${kafkaMemory:=24}G
+    config:
+      offsets.topic.replication.factor: 1
+      transaction.state.log.replication.factor: 1
+      transaction.state.log.min.isr: 1
+      default.replication.factor: 1
+      min.insync.replicas: 1
+    storage:
+      type: persistent-claim
+      class: "instana-standard"
+      size: ${kafkaVolumeSize:=512}Gi
+      deleteClaim: false
+    template:
+      pod:
+        metadata:
+          labels:
+            "cost.instana.io/centre": shared
+            "cost.instana.io/item": datastore
+            "instana.io/single-tenant": "true"
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                  - key: "workloads.instana.io/kafka"
+                    operator: In
+                    values:
+                      - "true"
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchLabels:
+                    "instana.io/single-tenant": "true"
+                topologyKey: "kubernetes.io/hostname"
+  zookeeper:
+    replicas: ${zookeeperKafkaCount:=3}
+    resources:
+      requests:
+        memory: ${zookeeperKafkaMemory:=24}Gi
+        cpu: ${zookeeperKafkaCpu:=14}
+    jvmOptions:
+      -Xms: ${zookeeperKafkaMemory:=24}G
+      -Xmx: ${zookeeperKafkaMemory:=24}G
+    storage:
+      type: persistent-claim
+      class: "instana-standard"
+      size: ${zookeeperKafkaVolumeSize:=512}Gi
+      deleteClaim: false
+    template:
+      pod:
+        metadata:
+          labels:
+            "cost.instana.io/centre": shared
+            "cost.instana.io/item": datastore
+            "instana.io/single-tenant": "true"
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                  - key: "workloads.instana.io/zookeeper"
+                    operator: In
+                    values:
+                      - "true"
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchLabels:
+                    "instana.io/single-tenant": "true"
+                topologyKey: "kubernetes.io/hostname"
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}

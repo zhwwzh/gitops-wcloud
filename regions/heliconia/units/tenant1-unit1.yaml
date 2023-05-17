@@ -1,0 +1,12 @@
+---
+apiVersion: instana.io/v1beta2
+kind: Unit
+metadata:
+  namespace: instana-units
+  name: tenant1-unit1
+spec:
+  coreName: instana-region
+  coreNamespace: instana-region
+  tenantName: tenant1
+  unitName: unit1
+  resourceProfile: large

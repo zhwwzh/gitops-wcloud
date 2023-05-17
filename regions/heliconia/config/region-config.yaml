@@ -1,0 +1,34 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: region-config
+  namespace: flux-system
+data:
+  certificateSource: "letsencrypt"
+  alphaZoneLabel: "us-central1-a"
+  betaZoneLabel: "us-central1-b"
+  #
+  cassandraMetricsCount: "2"
+  cassandraProfilesCount: "2"
+  cassandraSpansCount: "2"
+  cassandraStateCount: "2"
+  clickhouseApplicationShards: "1"
+  clickhouseLogsShards: "1"
+  elasticsearchMasterCount: "1"
+  elasticsearchActiveDataCount: "1"
+  elasticsearchArchivalDataCount: "1"
+  kafkaCount: "1"
+  zookeeperKafkaCount: "1"
+  #
+  cassandraMetricsVolumeSize: "128"
+  cassandraProfilesVolumeSize: "128"
+  cassandraSpansVolumeSize: "128"
+  cassandraStateVolumeSize: "128"
+  clickhouseApplicationVolumeSize: "128"
+  elasticsearchActiveDataVolumeSize: "128"
+  elasticsearchArchivalDataVolumeSize: "128"
+  beeinstanaAggregatorVolumeSize: "128"
+  #
+  zookeeperLogsCount: "1"
+  zookeeperApplicationCount: "1"

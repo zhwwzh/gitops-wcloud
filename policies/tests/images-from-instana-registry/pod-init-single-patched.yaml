@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-init-single
+spec:
+  imagePullSecrets:
+    - name: instana-registry
+  initContainers:
+    - name: int2
+      image: delivery.instana.io/rem-docker-dockerhub-mirror/crio/pause:latest
+  containers:
+    - name: container1
+      image: quay.io/openshift/pause

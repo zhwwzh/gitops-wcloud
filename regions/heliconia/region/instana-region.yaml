@@ -1,0 +1,160 @@
+---
+apiVersion: instana.io/v1beta2
+kind: Core
+metadata:
+  name: instana-region
+spec:
+  agentAcceptorConfig:
+    host: ingress-heliconia.instanatest.rocks
+    port: 443
+  baseDomain: instanatest.rocks
+  componentConfigs:
+    - name: acceptor
+      replicas: 1
+    - name: statistic-exporter-regional
+      replicas: 0
+    - name: cashier-usage-transfer
+      replicas: 0
+  datastoreConfigs:
+    beeInstanaConfig:
+      clustered: true
+      authEnabled: true
+      hosts:
+        - aggregators.datastores
+      ports:
+        - name: tcp
+          port: 9998
+    cassandraConfigs:
+      - hosts:
+          - instana-profiles-cassandra-profiles-service.datastores.svc.cluster.local
+        ports:
+          - name: tcp
+            port: 9042
+        keyspaces:
+          - profiles
+        authEnabled: true
+      - hosts:
+          - instana-spans-cassandra-spans-service.datastores.svc.cluster.local
+        ports:
+          - name: tcp
+            port: 9042
+        keyspaces:
+          - spans
+        authEnabled: true
+      - hosts:
+          - instana-metrics-cassandra-metrics-service.datastores.svc.cluster.local
+        ports:
+          - name: tcp
+            port: 9042
+        keyspaces:
+          - metrics
+        authEnabled: true
+      - hosts:
+          - instana-state-cassandra-state-service.datastores.svc.cluster.local
+        ports:
+          - name: tcp
+            port: 9042
+        keyspaces:
+          - state
+        authEnabled: true
+    clickhouseConfigs:      
+      - hosts:
+          - chi-application-saas-0-0.datastores.svc.cluster.local
+          - chi-application-saas-0-1.datastores.svc.cluster.local 
+        ports:
+          - name: tcp
+            port: 9000
+          - name: http
+            port: 8123
+        schemas:
+          - application
+          - logs
+          - synthetics
+          - slis
+        clusterName: saas
+        authEnabled: true
+    elasticsearchConfig:
+      hosts:
+        - elasticsearch-es-http.datastores.svc.cluster.local
+      ports:
+        - name: tcp
+          port: 9300
+        - name: http
+          port: 9200
+      clusterName: onprem_onprem
+      authEnabled: true
+    kafkaConfig:
+      hosts:
+        - kafka-kafka-brokers.datastores.svc.cluster.local
+      ports:
+        - name: tcp
+          port: 9092
+      authEnabled: true
+      saslMechanism: SCRAM-SHA-512
+    postgresConfigs:
+      - hosts:
+          - in-pg.heliconia-internal.instanatest.rocks
+        ports:
+          - name: tcp
+            port: 5432
+        databases:
+          - butlerdb
+          - tenantdb
+          - sales
+          - instanactl
+        authEnabled: true
+  emailConfig:
+    smtpConfig:
+      from: heliconia@instanatest.rocks
+      host: instanatest.rocks
+      port: 465
+      useSSL: true
+  storageConfigs:
+    rawSpans:
+      gcloudConfig:
+        bucket: "instana-heliconia-spans"
+        prefix: "spans"
+        storageClass: Standard
+        bucketLongTerm: "instana-heliconia-spans-longterm"
+        prefixLongTerm: "longterm"
+        storageClassLongTerm: Standard
+  serviceAccountAnnotations:
+    "iam.gke.io/gcp-service-account": "in-heliconia-pods@instana-non-production.iam.gserviceaccount.com"
+  resourceProfile: large
+  nodeSelector:
+    "workloads.instana.io/region": "true"
+  imagePullSecrets:
+    - name: instana-registry
+  operationMode: normal
+  operationScopes:
+    - core
+  properties:
+    - name: instana.region
+      value: heliconia
+    - name: config.hubforce.url
+      value: "fake-hubforce-server.fake-hubforce-server:9888"
+    - name: config.external.license.system
+      value: "false"
+  featureFlags:
+    - name: feature.instana.saas.enabled
+      enabled: true
+    - name: feature.beeinstana.infra.metrics.enabled
+      enabled: true
+    - name: feature.infra.explore.presentation.enabled
+      enabled: true
+    - name: feature.synthetic.smart.alerts.enabled
+      enabled: true
+    - name: feature.infra.smart.alerts.enabled
+      enabled: true
+    - name: feature.otlp.enabled
+      enabled: true
+    - name: feature.logging.enabled
+      enabled: true
+    - name: feature.synthetics.enabled
+      enabled: true
+    - name: feature.slo.enabled
+      enabled: true
+  imageConfig:
+    registry: delivery.instana.io
+    repository: rel-docker-backend-local/backend
+    tag: 3.245.259-0

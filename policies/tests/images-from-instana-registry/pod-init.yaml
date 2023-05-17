@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-init
+spec:
+  initContainers:
+    - name: int1
+      image: quay.io/kubernetes/pause
+    - name: int2
+      image: crio/pause:latest
+  containers:
+    - name: container1
+      image: quay.io/openshift/pause

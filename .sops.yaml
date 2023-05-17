@@ -1,0 +1,8 @@
+creation_rules:
+  - age: 'age1ek6qsfk8aynr3h6jz96rk8zhe3jzz2rtc88hx3zndsxxhqwulvssn6rs5j'
+    gcp_kms: 'projects/instana-non-production/locations/us-central1/keyRings/heliconia-ring/cryptoKeys/heliconia-sops'
+    encrypted_regex: ^(data|stringData)$
+    path_regex: '^.*heliconia.*\.enc\.yaml'
+  - kms: 'arn:aws:kms:ca-central-1:410797082306:key/bb0dc384-e403-4676-b3f6-12aedcd48a50'
+    encrypted_regex: ^(data|stringData)$
+    path_regex: '^.*lilac.*\.enc\.yaml'    

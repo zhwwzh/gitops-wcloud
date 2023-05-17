@@ -1,0 +1,80 @@
+---
+apiVersion: clickhouse.altinity.com/v1
+kind: ClickHouseInstallation
+metadata:
+  name: application
+spec:
+  useTemplates:
+    - name: clickhouse-common-template
+  defaults:
+    templates:
+      dataVolumeClaimTemplate: data-volume-template
+      logVolumeClaimTemplate: log-volume-template
+  configuration:
+    clusters:
+      - name: saas
+        templates:
+          podTemplate: clickhouse
+        layout:
+          shardsCount: ${clickhouseApplicationShards:=2}
+          replicasCount: 2
+        schemaPolicy:
+          replica: None
+          shard: None
+    zookeeper:
+      nodes:
+        - host: zookeeper-application-headless.datastores
+  templates:
+    podTemplates:
+      - name: clickhouse
+        spec:
+          metadata:
+            labels:
+              "cost.instana.io/centre": apm
+              "cost.instana.io/item": datastore
+              "instana.io/single-tenant": "true"
+          containers:
+            - name: instana-clickhouse
+              image: "altinity/clickhouse-server:22.3.10.24.altinitystable"
+              command:
+                - clickhouse-server
+                - --config-file=/etc/clickhouse-server/config.xml
+              resources:
+                requests:
+                  cpu: ${clickhouseApplicationCpu:=12}
+                  memory: ${clickhouseApplicationMemory:=24}Gi
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: "workloads.instana.io/clickhouse"
+                      operator: In
+                      values:
+                        - "true"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: "instana.io/single-tenant"
+                        operator: In
+                        values:
+                          - "true"
+                  topologyKey: kubernetes.io/hostname 
+    volumeClaimTemplates:
+      - name: data-volume-template
+        spec:
+          storageClassName: "instana-standard"
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: ${clickhouseApplicationVolumeSize:=512}Gi
+      - name: log-volume-template
+        spec:
+          storageClassName: "instana-standard"
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 512Mi

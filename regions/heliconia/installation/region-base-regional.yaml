@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: region-base-regional
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./regions/base-regional/installation
+  prune: true
+  wait: true
+  dependsOn:
+    - name: region-config
+    - name: region-base
+    - name: region-global
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-key

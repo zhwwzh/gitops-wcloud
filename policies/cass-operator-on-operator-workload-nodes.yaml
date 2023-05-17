@@ -1,0 +1,28 @@
+---
+apiVersion : kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: cass-operator-on-operator-workload-nodes
+spec:
+  background: false
+  rules:
+    - name: mutate-url-in-helm-repository
+      match:
+        all:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - cassandra-system
+      preconditions:
+        all:
+          - key: "{{request.operation || 'BACKGROUND'}}"
+            operator: AnyIn
+            value:
+              - CREATE
+              - UPDATE
+      mutate:
+        patchStrategicMerge:
+          spec:
+            nodeSelector:
+              "workloads.instana.io/operator": "true"
