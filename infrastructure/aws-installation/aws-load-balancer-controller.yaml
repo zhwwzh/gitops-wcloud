@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: aws-load-balancer-controller
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./infrastructure/aws-load-balancer-controller
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substituteFrom:
+      - name: cloud-provider-constants
+        kind: ConfigMap

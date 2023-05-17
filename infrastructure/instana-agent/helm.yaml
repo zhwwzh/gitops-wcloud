@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: instana-agent
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: instana-agent
+      version: "1.2.56"
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: instana-agent
+  install:
+    createNamespace: true
+  interval: 1m0s
+  targetNamespace: instana-agent
+  values:
+    agent:
+      env:
+        "ENABLE_AGENT_SOCKET": "true"
+      configuration_yaml: |
+        # Collect Dropwizard Metrics
+        com.instana.plugin.java:
+          dropwizardMetricCollection:
+            enabled: true
+        
+        # Disable instrumentation which causes
+        # performance issues and enable sdk packages
+        com.instana.plugin.javatrace:
+          instrumentation:
+            enabled: true
+            useByteArraySpanList: true
+            continuousQueueDraining: true
+            spanListSize: 1000
+            plugins:
+              Kafka011Entry: false
+              Kafka011Exit: false
+              KafkaExit: false
+              OkHttpExit: false
+              Cassandra3Exit: false
+              Cassandra4Exit: false
+            sdk:
+              packages:
+                - 'com.instana.ui'
+          
+          # Trace Clickhouse      
+          com.instana.plugin.clickhouse:
+            tracingEnabled: true
+            
+          # Trace Extra Headers
+          com.instana.tracing:
+            extra-http-headers:
+              - 'User-Agent'
+              - 'Origin'
+              - 'Accept'
+              - 'Referer'
+              - 'X-RateLimit-Remaining'
+              - 'X-RateLimit-Zone'
+  valuesFrom:
+    - kind: Secret
+      name: instana-agent-config

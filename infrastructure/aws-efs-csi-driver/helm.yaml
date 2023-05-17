@@ -1,0 +1,27 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: aws-efs-csi-driver
+  namespace: flux-system
+spec:
+  interval: 5m
+  targetNamespace: kube-system
+  chart:
+    spec:
+      chart: aws-efs-csi-driver
+      version: "2.4.1"
+      sourceRef:
+        kind: HelmRepository
+        name: aws-efs-csi-driver
+      interval: 1m
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+  test:
+    enable: true
+  values:
+    node: 
+      serviceAccount:
+        annotations:
+          "eks.amazonaws.com/role-arn": "arn:aws:iam::${cloudProjectId}:role/in-${regionDeploymentName:=unknown}-aws-addons"

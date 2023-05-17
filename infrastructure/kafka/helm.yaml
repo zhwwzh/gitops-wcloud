@@ -1,0 +1,23 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kafka
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: strimzi-kafka-operator
+      version: "0.33.0"
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: kafka-operator
+  install:
+    createNamespace: true
+  interval: 1m0s
+  targetNamespace: kafka-system
+  values:
+    watchAnyNamespace: true
+    nodeSelector:
+      "workloads.instana.io/operator": "true"
